@@ -1,8 +1,8 @@
-# Initial project dependencies. Versions will be locked after the environment
-# has been tested successfully on the development machine.
-gymnasium[box2d]
-numpy
-matplotlib
-torch
-jupyterlab
-
+# Direct project dependencies verified on Python 3.13.1 on Windows.
+gymnasium[box2d]==1.3.0
+numpy==2.5.1
+matplotlib==3.11.1
+torch==2.13.0
+# This lets editors such as VS Code run notebooks with this virtual environment.
+# Full JupyterLab is optional and is not needed for the first project steps.
+ipykernel==7.3.0

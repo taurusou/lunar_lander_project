@@ -10,8 +10,20 @@ DQN agent in `LunarLander-v3`?
 
 ## Current status
 
-The repository structure and experiment plan have been created. No agent or
-training implementation has been added yet.
+The repository structure and experiment plan have been created. The local
+environment check uses random actions to verify Gymnasium and LunarLander. No
+learning agent or training implementation has been added yet.
+
+## Local setup
+
+See [`docs/setup.md`](docs/setup.md) for beginner-oriented Windows setup and
+verification instructions.
+
+After installing the dependencies, run:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\environment_check.py
+```
 
 ## Planned comparison
 
@@ -47,4 +59,3 @@ artifacts/videos/         Local demo recordings (ignored by Git)
 
 The supplied CartPole notebook is a learning reference only. CartPole will not
 be used as the final project environment.
-

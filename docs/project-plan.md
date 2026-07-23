@@ -45,7 +45,7 @@ clear visual demonstration.
 
 - [x] Select a tentative environment and research question
 - [x] Initialize the repository structure
-- [ ] Confirm the local Python environment
+- [x] Confirm the local Python environment
 - [ ] Run the environment with a random policy
 - [ ] Define the experiment configuration
 - [ ] Implement and verify the baseline
@@ -54,4 +54,3 @@ clear visual demonstration.
 - [ ] Produce plots and a results table
 - [ ] Record the demo
 - [ ] Complete the report
-
