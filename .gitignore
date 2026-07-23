@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments and secrets
+.venv/
+venv/
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated experiment output
+runs/
+wandb/
+*.pt
+*.pth
+results/checkpoints/*
+!results/checkpoints/.gitkeep
+
+# Keep videos locally; publish one or link to an unlisted upload
+artifacts/videos/*
+!artifacts/videos/README.md
+

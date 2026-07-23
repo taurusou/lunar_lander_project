@@ -1,0 +1,8 @@
+# Initial project dependencies. Versions will be locked after the environment
+# has been tested successfully on the development machine.
+gymnasium[box2d]
+numpy
+matplotlib
+torch
+jupyterlab
+
