@@ -47,7 +47,7 @@ clear visual demonstration.
 - [x] Initialize the repository structure
 - [x] Confirm the local Python environment
 - [x] Run the environment with a random policy
-- [ ] Define the experiment configuration
+- [x] Define the experiment configuration
 - [x] Implement and verify the baseline
 - [ ] Implement and verify DQN training
 - [ ] Run controlled experiments

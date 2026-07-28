@@ -12,8 +12,9 @@ DQN agent in `LunarLander-v3`?
 
 The repository structure and experiment plan have been created. The local
 environment check uses random actions to verify Gymnasium and LunarLander. A
-100-episode random-action baseline has also been measured. No learning agent or
-training implementation has been added yet.
+100-episode random-action baseline has also been measured, and the controlled
+DQN experiment is defined. No learning agent or training implementation has
+been added yet.
 
 ## Local setup
 
@@ -48,6 +49,16 @@ Using seeds 0 through 99 produced:
 The raw episode data is in
 [`results/metrics/random_baseline.csv`](results/metrics/random_baseline.csv).
 The generated figures are in [`results/plots`](results/plots).
+
+## DQN experiment design
+
+The complete plan and explanation are in
+[`docs/dqn-experiment-design.md`](docs/dqn-experiment-design.md). Validate the
+machine-readable configuration with:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\check_dqn_config.py
+```
 
 ## Planned comparison
 
