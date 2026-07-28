@@ -1,0 +1,72 @@
+{
+  "project": {
+    "research_question": "How does epsilon decay speed affect DQN performance in LunarLander-v3?",
+    "only_changed_variable": "epsilon_decay_factor_per_episode"
+  },
+  "environment": {
+    "name": "LunarLander-v3",
+    "observation_count": 8,
+    "action_count": 4,
+    "solved_reward": 200.0,
+    "maximum_steps_per_episode": 1000
+  },
+  "network": {
+    "hidden_layer_sizes": [
+      128,
+      128
+    ],
+    "activation_function": "ReLU"
+  },
+  "optimization": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "batch_size": 128,
+    "discount_factor": 0.99,
+    "loss_function": "SmoothL1Loss",
+    "gradient_clip_value": 100.0
+  },
+  "replay_memory": {
+    "capacity": 50000,
+    "minimum_size_before_training": 1000
+  },
+  "target_network": {
+    "update_method": "soft",
+    "tau": 0.005,
+    "update_every_environment_steps": 1
+  },
+  "training": {
+    "number_of_episodes": 800,
+    "training_seeds": [
+      0,
+      1,
+      2
+    ],
+    "train_every_environment_steps": 1,
+    "moving_average_window": 100,
+    "device": "cpu"
+  },
+  "development_run": {
+    "number_of_episodes": 25,
+    "training_seed": 0,
+    "purpose": "Verify the complete training process before running the full experiment."
+  },
+  "evaluation": {
+    "episodes_per_trained_model": 100,
+    "first_seed": 1000,
+    "exploration_rate": 0.0
+  },
+  "experiments": [
+    {
+      "name": "fast_epsilon_decay",
+      "epsilon_start": 1.0,
+      "epsilon_end": 0.05,
+      "epsilon_decay_factor_per_episode": 0.98
+    },
+    {
+      "name": "gradual_epsilon_decay",
+      "epsilon_start": 1.0,
+      "epsilon_end": 0.05,
+      "epsilon_decay_factor_per_episode": 0.995
+    }
+  ]
+}
