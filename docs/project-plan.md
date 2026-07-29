@@ -49,7 +49,8 @@ clear visual demonstration.
 - [x] Run the environment with a random policy
 - [x] Define the experiment configuration
 - [x] Implement and verify the baseline
-- [ ] Implement and verify DQN training
+- [x] Implement and verify the DQN network and replay memory
+- [ ] Implement and verify the DQN training loop
 - [ ] Run controlled experiments
 - [ ] Produce plots and a results table
 - [ ] Record the demo

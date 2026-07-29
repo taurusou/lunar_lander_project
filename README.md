@@ -14,7 +14,8 @@ The repository structure and experiment plan have been created. The local
 environment check uses random actions to verify Gymnasium and LunarLander. A
 100-episode random-action baseline has also been measured, and the controlled
 DQN experiment is defined. No learning agent or training implementation has
-been added yet.
+been added yet. The Q-network and replay-memory building blocks are implemented
+and tested independently.
 
 ## Local setup
 
@@ -58,6 +59,16 @@ machine-readable configuration with:
 
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\check_dqn_config.py
+```
+
+## DQN component tests
+
+The Q-network and replay memory are explained in
+[`docs/dqn-components.md`](docs/dqn-components.md). Run their automated tests
+with:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -v
 ```
 
 ## Planned comparison
