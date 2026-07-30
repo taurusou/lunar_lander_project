@@ -71,6 +71,23 @@ with:
 .\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -v
 ```
 
+## DQN development training
+
+The training process is explained in
+[`docs/dqn-training.md`](docs/dqn-training.md). Run the 25-episode development
+check with:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\train_dqn.py
+```
+
+This short run verifies the pipeline and must not be treated as the final
+performance experiment.
+
+The completed development run collected 3,654 transitions over 25 episodes,
+began optimization in episode 11, and produced a mean reward of -118.88. No
+episode reached the 200-point solved threshold.
+
 ## Planned comparison
 
 - Random-action baseline

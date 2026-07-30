@@ -9,3 +9,6 @@ Run the current test suite from the repository root:
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -v
 ```
+
+The suite covers component behavior and small training-loop helpers. It does
+not run the full 25-episode development training.

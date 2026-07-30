@@ -50,7 +50,7 @@ clear visual demonstration.
 - [x] Define the experiment configuration
 - [x] Implement and verify the baseline
 - [x] Implement and verify the DQN network and replay memory
-- [ ] Implement and verify the DQN training loop
+- [x] Implement and verify the DQN training loop with a development run
 - [ ] Run controlled experiments
 - [ ] Produce plots and a results table
 - [ ] Record the demo
