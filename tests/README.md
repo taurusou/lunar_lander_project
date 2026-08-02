@@ -11,4 +11,4 @@ Run the current test suite from the repository root:
 ```
 
 The suite covers component behavior and small training-loop helpers. It does
-not run the full 25-episode development training.
+not run the full 25-episode development training or evaluation.

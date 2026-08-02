@@ -83,6 +83,10 @@ def validate_configuration(configuration):
         "Evaluation episode count",
     )
     validate_positive_number(
+        configuration["development_run"]["evaluation_episodes"],
+        "Development evaluation episode count",
+    )
+    validate_positive_number(
         optimization["batch_size"],
         "Batch size",
     )

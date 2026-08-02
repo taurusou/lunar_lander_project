@@ -10,12 +10,9 @@ DQN agent in `LunarLander-v3`?
 
 ## Current status
 
-The repository structure and experiment plan have been created. The local
-environment check uses random actions to verify Gymnasium and LunarLander. A
-100-episode random-action baseline has also been measured, and the controlled
-DQN experiment is defined. No learning agent or training implementation has
-been added yet. The Q-network and replay-memory building blocks are implemented
-and tested independently.
+The repository structure, random baseline, DQN components, development training
+loop, and checkpoint evaluation are implemented. The short development run is
+only a pipeline check; the full controlled experiment has not been run yet.
 
 ## Local setup
 
@@ -87,6 +84,23 @@ performance experiment.
 The completed development run collected 3,654 transitions over 25 episodes,
 began optimization in episode 11, and produced a mean reward of -118.88. No
 episode reached the 200-point solved threshold.
+
+## DQN development evaluation
+
+The evaluation process is explained in
+[`docs/dqn-evaluation.md`](docs/dqn-evaluation.md). Evaluate the local
+development checkpoint with greedy actions on unseen seeds:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\evaluate_dqn.py
+```
+
+This development evaluation verifies the pipeline and is not a final
+performance comparison.
+
+The 25 unseen-seed episodes produced a mean reward of -92.34 and no episode
+reached the 200-point solved threshold. All episodes reached the 1,000-step time
+limit, so this early policy has not learned to complete the landing task.
 
 ## Planned comparison
 
