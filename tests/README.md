@@ -11,5 +11,5 @@ Run the current test suite from the repository root:
 ```
 
 The suite covers component behavior, small training-loop helpers, evaluation
-safety, the six-model plan, and safe restart decisions. It does not run the
-full development or final training workload.
+safety, the six-model plan, safe restart decisions, and schedule-level result
+calculations. It does not run the full development or final training workload.

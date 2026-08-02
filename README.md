@@ -10,10 +10,9 @@ DQN agent in `LunarLander-v3`?
 
 ## Current status
 
-The repository structure, random baseline, DQN components, development training
-loop, checkpoint evaluation, and controlled experiment runner are implemented.
-The short development and smoke-test runs are only pipeline checks; the full
-controlled experiment has not been run yet.
+The repository structure, random baseline, DQN implementation, controlled
+experiment, unseen-seed evaluation, and final schedule analysis are complete.
+The report and recorded demonstration remain to be finished.
 
 ## Local setup
 
@@ -121,8 +120,28 @@ safe, step-by-step commands. Preview the six final runs without starting them:
 .\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\run_controlled_experiments.py
 ```
 
-The two-schedule smoke test has passed. Only use `--run-final` when the computer
-is ready for the full 4,800-episode training workload.
+The full six-model experiment is complete. The runner safely resumed after its
+first execution window ended and did not repeat the four completed models.
+
+## Final result
+
+See [`docs/final-results.md`](docs/final-results.md) for the complete results
+and cautious interpretation. Across 300 evaluation episodes per schedule:
+
+| Measurement | Fast decay | Gradual decay |
+| --- | ---: | ---: |
+| Mean reward | 238.77 | 192.94 |
+| Solved percentage | 86.00% | 60.67% |
+| Standard deviation between seed means | 14.55 | 78.39 |
+
+Under this experiment's fixed settings, fast decay was stronger and more
+consistent across training seeds.
+
+Recreate the schedule-level table and comparison plot with:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\analyze_final_results.py
+```
 
 ## Repository layout
 
