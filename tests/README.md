@@ -10,5 +10,6 @@ Run the current test suite from the repository root:
 .\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -v
 ```
 
-The suite covers component behavior and small training-loop helpers. It does
-not run the full 25-episode development training or evaluation.
+The suite covers component behavior, small training-loop helpers, evaluation
+safety, the six-model plan, and safe restart decisions. It does not run the
+full development or final training workload.

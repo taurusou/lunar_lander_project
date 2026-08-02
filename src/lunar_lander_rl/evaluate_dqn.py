@@ -22,13 +22,13 @@ DEVELOPMENT_EXPERIMENT_NAME = "fast_epsilon_decay"
 DEVELOPMENT_TRAINING_SEED = 0
 
 
-def get_development_checkpoint_path():
-    """Return the checkpoint path produced by the development training run."""
+def get_checkpoint_path(experiment_name, training_seed, run_type):
+    """Return the checkpoint path for one named training run."""
 
     training_run_name = make_run_name(
-        DEVELOPMENT_EXPERIMENT_NAME,
-        DEVELOPMENT_TRAINING_SEED,
-        "development",
+        experiment_name,
+        training_seed,
+        run_type,
     )
 
     checkpoint_path = (
@@ -38,6 +38,16 @@ def get_development_checkpoint_path():
         / (training_run_name + ".pt")
     )
     return checkpoint_path
+
+
+def get_development_checkpoint_path():
+    """Return the checkpoint path produced by the development training run."""
+
+    return get_checkpoint_path(
+        DEVELOPMENT_EXPERIMENT_NAME,
+        DEVELOPMENT_TRAINING_SEED,
+        "development",
+    )
 
 
 def load_checkpoint(checkpoint_path, device):
@@ -318,7 +328,7 @@ def create_evaluation_plot(
         linestyle="--",
         label="Solved threshold",
     )
-    plt.title("DQN Development Evaluation Rewards")
+    plt.title("DQN Evaluation Rewards")
     plt.xlabel("Evaluation episode")
     plt.ylabel("Total reward")
     plt.legend()
@@ -352,23 +362,31 @@ def print_summary(summary, number_of_episodes):
     )
 
 
-def main():
-    """Load the development checkpoint and run greedy unseen-seed evaluation."""
+def evaluate_saved_checkpoint(
+    configuration,
+    experiment_name,
+    training_seed,
+    number_of_episodes,
+    first_evaluation_seed,
+    run_type,
+):
+    """Load, evaluate, and save results for one trained DQN checkpoint."""
 
-    configuration = load_configuration()
-    development_settings = configuration["development_run"]
-    evaluation_settings = configuration["evaluation"]
     device = torch.device(configuration["training"]["device"])
-
-    experiment = find_experiment(
-        configuration,
-        DEVELOPMENT_EXPERIMENT_NAME,
+    experiment = find_experiment(configuration, experiment_name)
+    checkpoint_path = get_checkpoint_path(
+        experiment_name,
+        training_seed,
+        run_type,
     )
-    checkpoint_path = get_development_checkpoint_path()
     checkpoint = load_checkpoint(checkpoint_path, device)
 
+    # These checks help prevent labeling one model with another run's name.
     if checkpoint["experiment"]["name"] != experiment["name"]:
         raise ValueError("Checkpoint experiment does not match evaluation.")
+
+    if checkpoint["training_seed"] != training_seed:
+        raise ValueError("Checkpoint training seed does not match evaluation.")
 
     policy_network = build_policy_network(
         configuration,
@@ -376,16 +394,6 @@ def main():
         device,
     )
     parameters_before_evaluation = copy_model_parameters(policy_network)
-
-    number_of_episodes = development_settings["evaluation_episodes"]
-    first_evaluation_seed = evaluation_settings["first_seed"]
-
-    print("Starting greedy DQN development evaluation...")
-    print("Checkpoint:", checkpoint_path)
-    print("Evaluation episodes:", number_of_episodes)
-    print("Evaluation seeds:", first_evaluation_seed, "through", end=" ")
-    print(first_evaluation_seed + number_of_episodes - 1)
-    print("Exploration rate:", evaluation_settings["exploration_rate"])
 
     evaluation_metrics = evaluate_policy(
         configuration,
@@ -403,9 +411,9 @@ def main():
 
     summary = calculate_summary(evaluation_metrics)
     evaluation_run_name = make_evaluation_run_name(
-        DEVELOPMENT_EXPERIMENT_NAME,
-        DEVELOPMENT_TRAINING_SEED,
-        "development",
+        experiment_name,
+        training_seed,
+        run_type,
     )
     metrics_file = save_evaluation_metrics(
         evaluation_metrics,
@@ -418,6 +426,47 @@ def main():
         evaluation_run_name,
     )
 
+    return (
+        evaluation_metrics,
+        summary,
+        metrics_file,
+        plot_file,
+        checkpoint_path,
+    )
+
+
+def main():
+    """Load the development checkpoint and run greedy unseen-seed evaluation."""
+
+    configuration = load_configuration()
+    development_settings = configuration["development_run"]
+    evaluation_settings = configuration["evaluation"]
+    checkpoint_path = get_development_checkpoint_path()
+    number_of_episodes = development_settings["evaluation_episodes"]
+    first_evaluation_seed = evaluation_settings["first_seed"]
+
+    print("Starting greedy DQN development evaluation...")
+    print("Checkpoint:", checkpoint_path)
+    print("Evaluation episodes:", number_of_episodes)
+    print("Evaluation seeds:", first_evaluation_seed, "through", end=" ")
+    print(first_evaluation_seed + number_of_episodes - 1)
+    print("Exploration rate:", evaluation_settings["exploration_rate"])
+
+    (
+        evaluation_metrics,
+        summary,
+        metrics_file,
+        plot_file,
+        checkpoint_path,
+    ) = evaluate_saved_checkpoint(
+        configuration,
+        DEVELOPMENT_EXPERIMENT_NAME,
+        DEVELOPMENT_TRAINING_SEED,
+        number_of_episodes,
+        first_evaluation_seed,
+        "development",
+    )
+
     print_summary(summary, number_of_episodes)
     print("Model parameters unchanged: True")
     print("\nSaved evaluation metrics to:")
@@ -428,4 +477,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -318,7 +318,7 @@ def create_training_plot(metrics, run_name, moving_average_window):
         linestyle="--",
         label="Solved threshold",
     )
-    plt.title("DQN Development Training Rewards")
+    plt.title("DQN Training Rewards")
     plt.xlabel("Episode")
     plt.ylabel("Total reward")
     plt.legend()

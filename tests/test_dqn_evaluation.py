@@ -2,6 +2,8 @@
 
 import sys
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
 
 import torch
@@ -16,6 +18,7 @@ from evaluate_dqn import (  # noqa: E402
     calculate_summary,
     copy_model_parameters,
     model_parameters_match,
+    print_summary,
     select_greedy_action,
 )
 
@@ -67,6 +70,28 @@ class EvaluationSummaryTests(unittest.TestCase):
         self.assertEqual(summary["solved_count"], 1)
         self.assertAlmostEqual(summary["solved_percentage"], 100.0 / 3.0)
 
+    def test_print_summary_includes_all_main_statistics(self):
+        """The student-facing console summary should not omit its last lines."""
+
+        summary = {
+            "mean": 1.0,
+            "median": 2.0,
+            "standard_deviation": 3.0,
+            "minimum": -4.0,
+            "maximum": 5.0,
+            "solved_count": 1,
+            "solved_percentage": 25.0,
+        }
+        printed_output = StringIO()
+
+        with redirect_stdout(printed_output):
+            print_summary(summary, number_of_episodes=4)
+
+        output_text = printed_output.getvalue()
+        self.assertIn("Minimum reward: -4.0", output_text)
+        self.assertIn("Maximum reward: 5.0", output_text)
+        self.assertIn("Solved percentage: 25.0 %", output_text)
+
 
 class ParameterSafetyTests(unittest.TestCase):
     """Check the guard that proves evaluation does not train the model."""
@@ -98,4 +123,3 @@ class ParameterSafetyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

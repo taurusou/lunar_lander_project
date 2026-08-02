@@ -87,6 +87,14 @@ def validate_configuration(configuration):
         "Development evaluation episode count",
     )
     validate_positive_number(
+        configuration["smoke_test"]["number_of_episodes"],
+        "Smoke-test training episode count",
+    )
+    validate_positive_number(
+        configuration["smoke_test"]["evaluation_episodes"],
+        "Smoke-test evaluation episode count",
+    )
+    validate_positive_number(
         optimization["batch_size"],
         "Batch size",
     )

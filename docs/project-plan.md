@@ -52,6 +52,7 @@ clear visual demonstration.
 - [x] Implement and verify the DQN network and replay memory
 - [x] Implement and verify the DQN training loop with a development run
 - [x] Implement and verify checkpoint evaluation on unseen seeds
+- [x] Implement and smoke-test the controlled experiment runner
 - [ ] Run controlled experiments
 - [ ] Produce plots and a results table
 - [ ] Record the demo

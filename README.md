@@ -11,8 +11,9 @@ DQN agent in `LunarLander-v3`?
 ## Current status
 
 The repository structure, random baseline, DQN components, development training
-loop, and checkpoint evaluation are implemented. The short development run is
-only a pipeline check; the full controlled experiment has not been run yet.
+loop, checkpoint evaluation, and controlled experiment runner are implemented.
+The short development and smoke-test runs are only pipeline checks; the full
+controlled experiment has not been run yet.
 
 ## Local setup
 
@@ -110,6 +111,18 @@ limit, so this early policy has not learned to complete the landing task.
 
 Each trained agent should be evaluated with the same episode budget and on
 seeds that were not used during training.
+
+## Controlled experiment runner
+
+See [`docs/controlled-experiments.md`](docs/controlled-experiments.md) for the
+safe, step-by-step commands. Preview the six final runs without starting them:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\run_controlled_experiments.py
+```
+
+The two-schedule smoke test has passed. Only use `--run-final` when the computer
+is ready for the full 4,800-episode training workload.
 
 ## Repository layout
 

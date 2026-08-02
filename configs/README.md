@@ -19,3 +19,6 @@ Validate and preview the configuration with:
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\check_dqn_config.py
 ```
+
+The file also contains tiny smoke-test counts used only to check the controlled
+experiment runner. They are separate from the final 800-episode settings.
