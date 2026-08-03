@@ -34,3 +34,6 @@ results/plots/smoke_*
 # Keep videos locally; publish one or link to an unlisted upload
 artifacts/videos/*
 !artifacts/videos/README.md
+
+# Keep the selected final model so the demonstration is reproducible
+!results/checkpoints/final_fast_epsilon_decay_seed_1.pt
