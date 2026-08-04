@@ -1,124 +1,138 @@
 # LunarLander Reinforcement Learning Project
 
-This repository will study reinforcement learning in Gymnasium's
+This project studies reinforcement learning in Gymnasium's
 `LunarLander-v3` environment.
 
-## Proposed research question
+## Research Question
 
 How does the exploration schedule affect the performance and reliability of a
-DQN agent in `LunarLander-v3`?
+Deep Q-Network (DQN) agent in `LunarLander-v3`?
 
-## Current status
+## Project Status
 
-The repository structure and experiment plan have been created. The local
-environment check uses random actions to verify Gymnasium and LunarLander. A
-100-episode random-action baseline has also been measured, and the controlled
-DQN experiment is defined. No learning agent or training implementation has
-been added yet. The Q-network and replay-memory building blocks are implemented
-and tested independently.
+The project is complete. It includes:
 
-## Local setup
+- A random-action baseline
+- A DQN agent
+- Fast and gradual epsilon-decay experiments
+- Three training seeds for each schedule
+- Evaluation on 100 unseen seeds per trained model
+- Final metrics and plots
+- A final report
+- A recorded demonstration
 
-See [`docs/setup.md`](docs/setup.md) for beginner-oriented Windows setup and
-verification instructions.
+## Start Here
 
-After installing the dependencies, run:
+The main files are:
+
+- [`src/lunar_lander_rl/dqn_components.py`](src/lunar_lander_rl/dqn_components.py) — neural network and replay memory
+- [`src/lunar_lander_rl/train_dqn.py`](src/lunar_lander_rl/train_dqn.py) — DQN training
+- [`src/lunar_lander_rl/evaluate_dqn.py`](src/lunar_lander_rl/evaluate_dqn.py) — trained-model evaluation
+- [`src/lunar_lander_rl/analyze_final_results.py`](src/lunar_lander_rl/analyze_final_results.py) — final analysis and comparison plot
+- [`src/lunar_lander_rl/record_demo.py`](src/lunar_lander_rl/record_demo.py) — demonstration recording
+- [`report/final_report.md`](report/final_report.md) — complete project report
+
+## Setup
+
+See [`docs/setup.md`](docs/setup.md) for beginner-friendly Windows setup steps.
+
+After installing the dependencies, check the environment with:
 
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\environment_check.py
 ```
 
-## Random baseline
+## Main Commands
 
-Run the reproducible 100-episode baseline with:
+Run the random baseline:
 
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\random_baseline.py
 ```
 
-Using seeds 0 through 99 produced:
-
-| Measurement | Result |
-| --- | ---: |
-| Mean reward | -191.00 |
-| Median reward | -167.31 |
-| Standard deviation | 107.46 |
-| Minimum reward | -428.73 |
-| Maximum reward | 51.35 |
-| Episodes scoring at least 200 | 0 of 100 |
-
-The raw episode data is in
-[`results/metrics/random_baseline.csv`](results/metrics/random_baseline.csv).
-The generated figures are in [`results/plots`](results/plots).
-
-## DQN experiment design
-
-The complete plan and explanation are in
-[`docs/dqn-experiment-design.md`](docs/dqn-experiment-design.md). Validate the
-machine-readable configuration with:
-
-```powershell
-.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\check_dqn_config.py
-```
-
-## DQN component tests
-
-The Q-network and replay memory are explained in
-[`docs/dqn-components.md`](docs/dqn-components.md). Run their automated tests
-with:
+Run the automated tests:
 
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -v
 ```
 
-## DQN development training
-
-The training process is explained in
-[`docs/dqn-training.md`](docs/dqn-training.md). Run the 25-episode development
-check with:
+Run the short development training check:
 
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\train_dqn.py
 ```
 
-This short run verifies the pipeline and must not be treated as the final
-performance experiment.
+Preview or run the controlled six-model experiment:
 
-The completed development run collected 3,654 transitions over 25 episodes,
-began optimization in episode 11, and produced a mean reward of -118.88. No
-episode reached the 200-point solved threshold.
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\run_controlled_experiments.py
+```
 
-## Planned comparison
+Recreate the final comparison:
 
-- Random-action baseline
-- DQN with a quickly decreasing exploration rate
-- DQN with a gradually decreasing exploration rate
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\analyze_final_results.py
+```
 
-Each trained agent should be evaluated with the same episode budget and on
-seeds that were not used during training.
+Record a demonstration using the included checkpoint:
 
-## Repository layout
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\record_demo.py
+```
+
+## Experiment Design
+
+The experiment compared:
+
+- DQN with fast epsilon decay (`0.98`)
+- DQN with gradual epsilon decay (`0.995`)
+
+Both schedules used the same neural network, optimizer, replay memory, training
+budget, training seeds, and evaluation seeds. The epsilon-decay factor was the
+main changed variable.
+
+Each schedule was trained with seeds 0, 1, and 2 for 800 episodes per seed.
+Each trained model was evaluated for 100 episodes using unseen seeds 1000–1099.
+
+## Final Results
+
+| Measurement | Fast decay | Gradual decay |
+|---|---:|---:|
+| Mean reward | 238.77 | 192.94 |
+| Solved percentage | 86.00% | 60.67% |
+| Standard deviation between seed means | 14.55 | 78.39 |
+
+Under the fixed settings used in this project, fast epsilon decay produced
+stronger and more consistent results.
+
+The random-action baseline had a mean reward of `-191.00` and solved 0 of 100
+episodes.
+
+For the complete discussion and limitations, see the
+[final report](report/final_report.md).
+
+## Final Deliverables
+
+- [Final report](report/final_report.md)
+- [Final comparison plot](results/plots/final_schedule_comparison.png)
+- [Demonstration video](https://youtu.be/UTzQmFBCSVw)
+- [Project source code](src/lunar_lander_rl)
+
+## Repository Layout
 
 ```text
 configs/                  Experiment settings
-docs/                     Project plan and working notes
-notebooks/                Exploration and analysis notebooks
-references/               Documentation and source links
-report/                   Final report material
-src/lunar_lander_rl/      Reusable project source code
-tests/                    Small correctness checks
-results/                  Metrics, plots, and ignored checkpoints
-artifacts/videos/         Local demo recordings (ignored by Git)
+docs/                     Setup and supporting explanations
+references/               Source and documentation links
+report/                   Final project report
+src/lunar_lander_rl/      Main Python source code
+tests/                    Automated correctness checks
+results/metrics/          Experiment data and summaries
+results/plots/            Training, evaluation, and comparison plots
+results/checkpoints/      Selected checkpoint used by the demo
 ```
 
-## Main deliverables
+## Course-Material Note
 
-- A working, commented repository or notebook
-- A demo video or GIF
-- A report explaining the approach, experiments, results, conclusions, and
-  references
-
-## Course-material note
-
-The supplied CartPole notebook is a learning reference only. CartPole will not
-be used as the final project environment.
+The supplied CartPole notebook was used only as a learning reference.
+`LunarLander-v3`, not CartPole, was used as the final project environment.

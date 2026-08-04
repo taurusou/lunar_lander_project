@@ -1,0 +1,3 @@
+experiment_name,trained_models,evaluation_episodes,pooled_mean_reward,pooled_median_reward,pooled_reward_standard_deviation,solved_count,solved_percentage,mean_of_seed_mean_rewards,seed_mean_standard_deviation,total_training_minutes
+fast_epsilon_decay,3,300,238.77039886729267,255.40969191052324,61.522112846308744,258,86.0,238.77039886729267,14.5493773687407,42.040367186663204
+gradual_epsilon_decay,3,300,192.94069049806265,236.15324867603974,91.70973971550403,182,60.666666666666664,192.94069049806265,78.39232144726425,42.26610038167176

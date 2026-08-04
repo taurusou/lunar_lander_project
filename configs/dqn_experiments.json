@@ -47,8 +47,17 @@
   },
   "development_run": {
     "number_of_episodes": 25,
+    "evaluation_episodes": 25,
     "training_seed": 0,
-    "purpose": "Verify the complete training process before running the full experiment."
+    "purpose": "Verify training and evaluation before running the full experiment."
+  },
+  "smoke_test": {
+    "number_of_episodes": 2,
+    "evaluation_episodes": 2,
+    "training_seeds": [
+      0
+    ],
+    "purpose": "Quickly verify the six-model experiment runner without measuring performance."
   },
   "evaluation": {
     "episodes_per_trained_model": 100,
