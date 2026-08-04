@@ -1,4 +1,4 @@
-"""Small building blocks used by the future DQN training program.
+"""Small building blocks used by the DQN training program.
 
 This module contains:
 
@@ -164,4 +164,3 @@ class ReplayMemory:
         """Allow len(memory) to report the number of stored transitions."""
 
         return len(self.transitions)
-

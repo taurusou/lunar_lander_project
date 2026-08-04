@@ -1,8 +1,7 @@
-"""Read and validate the planned DQN experiment configuration.
+"""Read and validate the DQN experiment configuration.
 
 This script does not train a neural network. It checks the JSON configuration
-before we write the DQN implementation, which helps us catch unfair or invalid
-experiment settings early.
+before an experiment starts, which helps catch unfair or invalid settings early.
 """
 
 import json
@@ -125,8 +124,8 @@ def validate_configuration(configuration):
     first_experiment = experiments[0]
     second_experiment = experiments[1]
 
-    # Start and end epsilon must match. The decay factor is our experiment's
-    # only intended independent variable.
+    # Both schedules must begin and end at the same epsilon values. The decay
+    # factor is the experiment's only intended independent variable.
     if first_experiment["epsilon_start"] != second_experiment["epsilon_start"]:
         raise ValueError("Both schedules must use the same starting epsilon.")
 

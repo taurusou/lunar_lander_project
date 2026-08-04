@@ -1,4 +1,5 @@
 """Record one demonstration episode using a trained DQN checkpoint."""
+
 from pathlib import Path
 
 import gymnasium as gym
@@ -34,11 +35,18 @@ def choose_greedy_action(observation, policy_network, device):
         device=device,
     ).unsqueeze(0)
 
+    # Recording is evaluation only, so gradients are not needed.
     with torch.no_grad():
         q_values = policy_network(observation_tensor)
 
     action = int(q_values.argmax(dim=1).item())
     return action
+
+
+def record_first_episode(episode_number):
+    """Tell Gymnasium to record only the first episode."""
+
+    return episode_number == 0
 
 
 def main():
@@ -59,7 +67,6 @@ def main():
     )
 
     configuration = checkpoint["configuration"]
-
     environment_settings = configuration["environment"]
     network_settings = configuration["network"]
 
@@ -72,7 +79,6 @@ def main():
     policy_network.load_state_dict(
         checkpoint["policy_network_state"]
     )
-
     policy_network.eval()
 
     VIDEO_FOLDER.mkdir(parents=True, exist_ok=True)
@@ -86,42 +92,44 @@ def main():
         environment,
         video_folder=str(VIDEO_FOLDER),
         name_prefix="fast-decay-dqn-demo",
-        episode_trigger=lambda episode_number: episode_number == 0,
+        episode_trigger=record_first_episode,
         disable_logger=True,
     )
 
-    observation, information = environment.reset(seed=DEMO_SEED)
+    try:
+        observation, information = environment.reset(seed=DEMO_SEED)
 
-    terminated = False
-    truncated = False
-    total_reward = 0.0
-    number_of_steps = 0
+        terminated = False
+        truncated = False
+        total_reward = 0.0
+        number_of_steps = 0
 
-    while not terminated and not truncated:
-        action = choose_greedy_action(
-            observation,
-            policy_network,
-            device,
-        )
+        while not terminated and not truncated:
+            action = choose_greedy_action(
+                observation,
+                policy_network,
+                device,
+            )
 
-        (
-            observation,
-            reward,
-            terminated,
-            truncated,
-            information,
-        ) = environment.step(action)
+            (
+                observation,
+                reward,
+                terminated,
+                truncated,
+                information,
+            ) = environment.step(action)
 
-        total_reward += reward
-        number_of_steps += 1
-
-    environment.close()
+            total_reward = total_reward + float(reward)
+            number_of_steps = number_of_steps + 1
+    finally:
+        # Closing the wrapper finishes and saves the video file.
+        environment.close()
 
     print("Demo episode finished.")
-    print(f"Seed: {DEMO_SEED}")
-    print(f"Total reward: {total_reward:.2f}")
-    print(f"Number of steps: {number_of_steps}")
-    print(f"Video folder: {VIDEO_FOLDER}")
+    print("Seed:", DEMO_SEED)
+    print("Total reward:", round(total_reward, 2))
+    print("Number of steps:", number_of_steps)
+    print("Video folder:", VIDEO_FOLDER)
 
 
 if __name__ == "__main__":
