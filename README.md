@@ -5,7 +5,7 @@ This project studies reinforcement learning in Gymnasium's
 
 ## Research Question
 
-How does the exploration schedule affect the performance and reliability of a
+How the exploration schedule affects the performance and reliability of a
 Deep Q-Network (DQN) agent in `LunarLander-v3`?
 
 ## Project Status
