@@ -11,9 +11,7 @@ The research question is:
 > How does epsilon-decay speed affect DQN performance and consistency in
 > LunarLander-v3?
 
-Two agents use the same neural network, optimizer, replay memory, training
-budget, and evaluation procedure. The primary changed variable is the
-epsilon-decay factor.
+The models in both epsilon-decay groups use the same neural network, optimizer, replay memory, training budget, and evaluation procedure. The primary changed variable is the epsilon-decay factor.
 
 ## 2. Environment
 
