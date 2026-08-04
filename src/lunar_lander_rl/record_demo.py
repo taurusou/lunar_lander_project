@@ -1,4 +1,4 @@
-"""Record one demonstration episode using a trained DQN checkpoint."""
+"""Record one demo episode using a trained DQN checkpoint."""
 
 from pathlib import Path
 
