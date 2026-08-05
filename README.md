@@ -144,7 +144,4 @@ results/plots/            Training, evaluation, and comparison plots
 results/checkpoints/      Selected checkpoint used by the demo
 ```
 
-## Course-Material Note
 
-The supplied CartPole notebook was used only as a learning reference.
-`LunarLander-v3`, not CartPole, was used as the final project environment.
