@@ -62,10 +62,22 @@ Run the short development training check:
 .\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\train_dqn.py
 ```
 
-Preview or run the controlled six-model experiment:
+Preview the controlled experiment without starting training:
 
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\run_controlled_experiments.py
+```
+
+Run the small pipeline smoke test:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\run_controlled_experiments.py --smoke-test
+```
+
+Run the complete six-model experiment:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 src\lunar_lander_rl\run_controlled_experiments.py --run-final
 ```
 
 Recreate the final comparison:
