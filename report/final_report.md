@@ -308,7 +308,6 @@ The tests checked areas such as:
 - Epsilon calculation
 - Target-network updates
 - Whether one optimization step changed the policy network
-- Whether checkpoints could be saved and loaded
 - Whether evaluation avoided changing the trained model
 
 Testing the smaller parts first made it easier to identify problems before combining everything into one training loop.
