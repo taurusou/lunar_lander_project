@@ -41,7 +41,6 @@
       1,
       2
     ],
-    "train_every_environment_steps": 1,
     "moving_average_window": 100,
     "device": "cpu"
   },
