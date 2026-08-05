@@ -1,22 +1,18 @@
 # DQN components
 
-The first DQN implementation step contains two independent pieces. Neither
-piece runs an environment or trains an agent yet.
+The first DQN implementation step contains two independent pieces. Neither piece runs an environment or trains an agent yet.
 
 ## Q-network
 
-`DQNNetwork` receives LunarLander's eight observation values and produces four
-Q-values:
+`DQNNetwork` receives LunarLander's eight observation values and produces four Q-values:
 
 ```text
 8 observations → 128 neurons → 128 neurons → 4 Q-values
 ```
 
-Each output corresponds to one LunarLander action. The agent will normally
-choose the action with the largest Q-value when it is not exploring.
+Each output corresponds to one LunarLander action. The agent will normally choose the action with the largest Q-value when it is not exploring.
 
-The output does not use softmax. Q-values are predicted future rewards, not
-probabilities, so they may be negative or positive and do not need to add up to
+The output does not use softmax. Q-values are predicted future rewards, not probabilities, so they may be negative or positive and do not need to add up to
 one.
 
 ## Transition
@@ -32,10 +28,8 @@ terminated
 truncated
 ```
 
-Termination and truncation remain separate because they have different
-meanings. A natural terminal state has no future reward. A time-limit
-truncation ended the recorded episode, but it is not automatically the same as
-a natural terminal state when calculating a DQN target.
+Termination and truncation remain separate because they have different meanings. A natural terminal state has no future reward. A time-limit
+truncation ended the recorded episode, but it is not automatically the same as a natural terminal state when calculating a DQN target.
 
 ## Replay memory
 
@@ -46,8 +40,7 @@ a natural terminal state when calculating a DQN target.
 3. Training will randomly sample batches from the stored transitions.
 4. Sampling does not remove anything.
 
-The final configuration allows 50,000 transitions, although the automated tests
-use tiny capacities so replacement behavior is easy to verify.
+The final configuration allows 50,000 transitions, although the automated tests use tiny capacities so replacement behavior is easy to verify.
 
 ## Automated tests
 
