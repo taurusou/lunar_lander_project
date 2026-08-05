@@ -1,7 +1,6 @@
 # DQN training loop
 
-The first training run is a 25-episode development check. It is intentionally
-too short to judge whether DQN solves LunarLander.
+The first training run is a 25-episode development check. It is intentionally too short to judge whether DQN solves LunarLander.
 
 ## Training sequence
 
@@ -70,12 +69,11 @@ results/plots/development_fast_epsilon_decay_seed_0_rewards.png
 results/checkpoints/development_fast_epsilon_decay_seed_0.pt
 ```
 
-Model checkpoints are ignored by Git because they are generated binary files.
+Git will ignore model checkpoints.
 
 ## Important interpretation
 
-The development run answers, “Does the training pipeline work?” It does not
-answer, “How well does the agent learn?” Final conclusions require 800 episodes,
+The development run answers, “Does the training pipeline work?” It does not answer, “How well does the agent learn?” Final conclusions require 800 episodes,
 both epsilon schedules, three training seeds, and separate evaluation.
 
 ## Development-run result
@@ -93,10 +91,8 @@ The configured run completed successfully with:
 | First episode containing optimization loss | 11 |
 | Final epsilon | 0.6158 |
 
-The moving average increased during this short run, but no episode reached the
-solved threshold. This result confirms that experience collection, optimization,
-target updates, metrics, plotting, and checkpoint saving work. It is not
-evidence that the final agent is solved or that one epsilon schedule is better.
+The moving average increased during this short run, but no episode reached the solved threshold. This result confirms that experience collection, optimization,
+target updates, metrics, plotting, and checkpoint saving work. It is not evidence that the final agent is solved or that one epsilon schedule is better.
 
 ## Reference
 
