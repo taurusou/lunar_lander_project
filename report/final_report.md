@@ -2,8 +2,7 @@
 
 ## 1. Project overview
 
-This project studies how the rate of epsilon decay affects the performance
-and reliability of a Deep Q-Network agent in Gymnasium's LunarLander-v3
+This project studies how does the rate of epsilon decay affect the performance and reliability of a Deep Q-Network agent in Gymnasium's LunarLander-v3
 environment.
 
 The research question is:
@@ -15,8 +14,7 @@ The models in both epsilon-decay groups use the same neural network, optimizer, 
 
 ## 2. Environment
 
-LunarLander-v3 is a physics-based Gymnasium environment. The observation is
-an eight-dimensional continuous vector containing position, velocity, angle,
+LunarLander-v3 is a physics-based Gymnasium environment. The observation is an eight-dimensional continuous vector containing position, velocity, angle,
 angular velocity, and leg-contact information.
 
 The agent has four discrete actions:
@@ -203,8 +201,7 @@ Each model was trained for 800 episodes.
 The complete training experiment included:
 
 ```text
-2 epsilon schedules × 3 training seeds × 800 episodes
-= 4,800 training episodes
+2 epsilon schedules × 3 training seeds × 800 episodes = 4,800 training episodes
 ```
 
 Using multiple training seeds was important because reinforcement-learning results can change between runs.
