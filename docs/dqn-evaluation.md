@@ -17,11 +17,9 @@ This isolates what the policy learned during training.
 
 ## Unseen seeds
 
-Training seed 0 used environment seeds beginning at 0. Development evaluation
-uses seeds 1000 through 1024, which were not used during training.
+Training seed 0 used environment seeds beginning at 0. Development evaluation uses seeds 1000 through 1024, which were not used during training.
 
-Every final model will later use the full configured evaluation set of seeds
-1000 through 1099. Using the same unseen seeds makes comparisons fair.
+Every final model will later use the full configured evaluation set of seeds 1000 through 1099. Using the same unseen seeds makes comparisons fair.
 
 ## Development command
 
@@ -59,19 +57,14 @@ results/plots/development_evaluation_fast_epsilon_decay_seed_0_rewards.png
 | Episodes reaching the 1,000-step limit | 25 of 25 |
 | Model parameters unchanged | Yes |
 
-The parameter check shows that the evaluation code measured the saved model
-without training it. Every episode reached the time limit instead of ending in
-a landing or crash. This suggests that the briefly trained agent learned to
-avoid an immediate failure, but it did not learn to finish the landing task.
+The parameter check shows that the evaluation code measured the saved model without training it. Every episode reached the time limit instead of ending in
+a landing or crash. This suggests that the briefly trained agent learned to avoid an immediate failure, but it did not learn to finish the landing task.
 
-Its mean reward is higher than the random baseline mean, but this is not yet a
-fair final comparison. The development model trained for only 25 episodes and
-was evaluated on only 25 different seeds, while the random baseline used 100
-episodes. The final experiment will evaluate every trained model on the same
+Its mean reward is higher than the random baseline mean, but this is not yet a fair final comparison. The development model trained for only 25 episodes and
+was evaluated on only 25 different seeds, while the random baseline used 100 episodes. The final experiment will evaluate every trained model on the same
 100 seeds.
 
 ## Interpretation rule
 
-The development checkpoint trained for only 25 episodes. Its evaluation is a
-pipeline check, not a final comparison against the random baseline and not
+The development checkpoint trained for only 25 episodes. Its evaluation is a pipeline check, not a final comparison against the random baseline and not
 evidence that the environment is solved.
