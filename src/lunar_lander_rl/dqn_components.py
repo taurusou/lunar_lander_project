@@ -1,12 +1,6 @@
-"""Small building blocks used by the DQN training program.
+"""Neural-network and replay-memory components used by the DQN agent.
 
-This module contains:
-
-1. DQNNetwork, which predicts one Q-value for each possible action.
-2. ReplayMemory, which stores past experiences for random sampling.
-
-These components are based on the main ideas in PyTorch's official DQN
-tutorial, but they are written here with beginner-oriented names and comments:
+The implementation follows the main ideas in PyTorch's official DQN tutorial:
 https://docs.pytorch.org/tutorials/intermediate/reinforcement_q_learning.html
 """
 
@@ -35,8 +29,7 @@ class DQNNetwork(nn.Module):
     ):
         """Create the network layers using values from the configuration."""
 
-        # nn.Module performs important PyTorch setup. A subclass should always
-        # call its parent constructor before creating layers.
+      
         super().__init__()
 
         if observation_count <= 0:
@@ -46,7 +39,7 @@ class DQNNetwork(nn.Module):
             raise ValueError("action_count must be greater than zero.")
 
         if len(hidden_layer_sizes) != 2:
-            raise ValueError("This beginner network requires two hidden layers.")
+            raise ValueError("hidden_layer_sizes must contain exactly two values.")
 
         first_hidden_size = hidden_layer_sizes[0]
         second_hidden_size = hidden_layer_sizes[1]
@@ -54,8 +47,7 @@ class DQNNetwork(nn.Module):
         if first_hidden_size <= 0 or second_hidden_size <= 0:
             raise ValueError("Hidden-layer sizes must be greater than zero.")
 
-        # A Linear layer connects every value from the previous layer to every
-        # neuron in the next layer.
+    
         self.input_layer = nn.Linear(observation_count, first_hidden_size)
         self.hidden_layer = nn.Linear(first_hidden_size, second_hidden_size)
         self.output_layer = nn.Linear(second_hidden_size, action_count)
@@ -63,8 +55,7 @@ class DQNNetwork(nn.Module):
     def forward(self, observations):
         """Pass one observation or a batch of observations through the model."""
 
-        # ReLU replaces negative hidden values with zero. This gives the
-        # network the nonlinearity needed to learn more than a straight line.
+        # Apply ReLU after each hidden layer.
         hidden_values = torch.relu(self.input_layer(observations))
         hidden_values = torch.relu(self.hidden_layer(hidden_values))
 
@@ -136,14 +127,12 @@ class ReplayMemory:
         )
 
         if len(self.transitions) < self.capacity:
-            # During initial collection, the memory still has empty space.
             self.transitions.append(transition)
         else:
-            # Once full, next_position identifies the oldest item.
+            # Replace the oldest transition when the memory is full.
             self.transitions[self.next_position] = transition
 
-        # The remainder operator wraps the position back to zero after it
-        # reaches capacity. This makes the list act like a circular buffer.
+        # Wrap back to the beginning after reaching capacity.
         self.next_position = (self.next_position + 1) % self.capacity
 
     def sample(self, batch_size):
