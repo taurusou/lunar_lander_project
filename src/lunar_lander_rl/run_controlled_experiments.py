@@ -1,9 +1,8 @@
-"""Run the fair DQN comparison defined in the shared configuration.
+"""Run the controlled DQN comparison defined in the shared configuration.
 
-Running this file without a flag only displays the experiment plan. This
-prevents a beginner from accidentally starting six long training runs. Use
-``--smoke-test`` for a tiny pipeline check and ``--run-final`` only when ready
-to collect the final project results.
+Running this file without a flag only displays the experiment plan, which
+avoids accidentally starting six long training runs. Use ``--smoke-test`` for
+a short pipeline check and ``--run-final`` for the complete experiment.
 """
 
 import argparse
@@ -373,7 +372,7 @@ def run_all_models(configuration, run_plan):
 
 
 def parse_arguments():
-    """Read the explicit command-line choice made by the student."""
+    """Read the selected command-line run mode."""
 
     parser = argparse.ArgumentParser(
         description="Plan, smoke-test, or run the controlled DQN experiment."
