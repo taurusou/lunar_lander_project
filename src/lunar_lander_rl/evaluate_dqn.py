@@ -95,9 +95,7 @@ def build_policy_network(configuration, checkpoint, device):
 
     policy_network.load_state_dict(checkpoint["policy_network_state"])
 
-    # Evaluation mode tells PyTorch the network is being used for prediction.
-    # Our current layers behave the same in both modes, but setting it is a
-    # correct habit for models that later use dropout or batch normalization.
+    # This also keeps evaluation correct if dropout or batch normalization is added to the network later.
     policy_network.eval()
     return policy_network
 
@@ -120,7 +118,7 @@ def select_greedy_action(observation, policy_network, device):
 
 
 def copy_model_parameters(policy_network):
-    """Copy parameters so we can prove evaluation did not change the model."""
+    """Copy parameters so we can check that evaluation leaves the model unchanged."""
 
     parameter_copies = []
 
