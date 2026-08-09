@@ -27,8 +27,7 @@ from dqn_components import DQNNetwork, ReplayMemory
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 CONFIG_FILE = PROJECT_ROOT / "configs" / "dqn_experiments.json"
 
-# The development run uses only one schedule. Later, the final experiment will
-# call the same training function for both schedules and all three seeds.
+# The short development run uses the fast-decay schedule.
 DEVELOPMENT_EXPERIMENT_NAME = "fast_epsilon_decay"
 
 
@@ -402,7 +401,7 @@ def train_one_model(
     optimizer = torch.optim.AdamW(
         policy_network.parameters(),
         lr=optimization_settings["learning_rate"],
-        amsgrad=True,
+        amsgrad=optimization_settings["amsgrad"],
     )
 
     replay_memory = ReplayMemory(replay_settings["capacity"])
@@ -415,8 +414,7 @@ def train_one_model(
             episode_number = episode_index + 1
             epsilon = calculate_epsilon(experiment, episode_index)
 
-            # The same seed formula will be used for both schedules, giving
-            # them the same sequence of starting conditions.
+            # Use the same seed formula for both schedules so they receivethe same sequence of starting conditions.
             environment_seed = training_seed * 10_000 + episode_index
             observation, information = environment.reset(
                 seed=environment_seed
