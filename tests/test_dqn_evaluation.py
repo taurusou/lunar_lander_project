@@ -71,7 +71,7 @@ class EvaluationSummaryTests(unittest.TestCase):
         self.assertAlmostEqual(summary["solved_percentage"], 100.0 / 3.0)
 
     def test_print_summary_includes_all_main_statistics(self):
-        """The student-facing console summary should not omit its last lines."""
+        """The console summary should include all main statistics."""
 
         summary = {
             "mean": 1.0,

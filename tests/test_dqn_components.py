@@ -10,9 +10,7 @@ import gymnasium as gym
 import torch
 
 
-# The project uses a src folder. Adding its package directory to the import
-# search path lets this test file import the components without installing the
-# project as a separate package.
+# Add the source folder so the test can import the project modules.
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIRECTORY = PROJECT_ROOT / "src" / "lunar_lander_rl"
 sys.path.insert(0, str(SOURCE_DIRECTORY))
@@ -24,8 +22,7 @@ CONFIG_FILE = PROJECT_ROOT / "configs" / "dqn_experiments.json"
 
 
 def load_test_configuration():
-    """Load the same settings that the future training program will use."""
-
+    """Load the same settings used by the training program."""
     with CONFIG_FILE.open("r", encoding="utf-8") as config_file:
         configuration = json.load(config_file)
 
