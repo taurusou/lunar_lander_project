@@ -19,6 +19,7 @@
   },
   "optimization": {
     "optimizer": "AdamW",
+    "amsgrad": true,
     "learning_rate": 0.0003,
     "batch_size": 128,
     "discount_factor": 0.99,
