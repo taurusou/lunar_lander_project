@@ -61,8 +61,10 @@ def validate_configuration(configuration):
     """Check important correctness and fairness rules."""
 
     environment = configuration["environment"]
+    network = configuration["network"]
     optimization = configuration["optimization"]
     replay_memory = configuration["replay_memory"]
+    target_network = configuration["target_network"]
     training = configuration["training"]
     evaluation = configuration["evaluation"]
     experiments = configuration["experiments"]
@@ -72,6 +74,24 @@ def validate_configuration(configuration):
 
     if environment["action_count"] != 4:
         raise ValueError("Discrete LunarLander-v3 should have 4 actions.")
+
+    if network["activation_function"] != "ReLU":
+        raise ValueError("This implementation uses ReLU activation.")
+
+    if optimization["optimizer"] != "AdamW":
+        raise ValueError("This implementation uses the AdamW optimizer.")
+
+    if not isinstance(optimization["amsgrad"], bool):
+        raise ValueError("amsgrad must be either true or false.")
+
+    if optimization["loss_function"] != "SmoothL1Loss":
+        raise ValueError("This implementation uses SmoothL1Loss.")
+
+    if target_network["update_method"] != "soft":
+        raise ValueError("This implementation uses soft target-network updates.")
+
+    if evaluation["exploration_rate"] != 0.0:
+        raise ValueError("Evaluation must use an exploration rate of 0.")
 
     validate_positive_number(
         training["number_of_episodes"],
