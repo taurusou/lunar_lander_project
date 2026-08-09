@@ -16,8 +16,7 @@ import gymnasium as gym
 import matplotlib.pyplot as plt
 
 
-# Keeping important settings near the top makes the experiment easy to read
-# and change. These values also tell another student exactly what we ran.
+# Settings used for the reproducible random baseline.
 ENVIRONMENT_NAME = "LunarLander-v3"
 NUMBER_OF_EPISODES = 100
 FIRST_SEED = 0
@@ -25,8 +24,7 @@ SOLVED_REWARD = 200.0
 SAFETY_STEP_LIMIT = 2_000
 
 
-# This file is inside src/lunar_lander_rl. Going up three folder levels gives
-# us the repository's root folder, regardless of where the command is run.
+# Repository root used to build output paths.
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 METRICS_FILE = PROJECT_ROOT / "results" / "metrics" / "random_baseline.csv"
 EPISODE_PLOT_FILE = (
@@ -40,12 +38,10 @@ DISTRIBUTION_PLOT_FILE = (
 def run_one_episode(environment, seed):
     """Run one episode with random actions and return its measurements."""
 
-    # reset begins a new episode. Giving each episode its own seed makes the
-    # experiment repeatable.
+    # Use a fixed seed so each episode can be reproduced.
     observation, information = environment.reset(seed=seed)
 
-    # The action space has its own random-number generator. Seeding it makes
-    # the random action sequence repeatable too.
+    # Seed the action space so the random actions are reproducible too.
     environment.action_space.seed(seed)
 
     total_reward = 0.0
@@ -53,12 +49,9 @@ def run_one_episode(environment, seed):
     terminated = False
     truncated = False
 
-    # An episode is finished when either Gymnasium ending condition is true.
-    while not terminated and not truncated:
-        # sample chooses a valid random action from Discrete(4).
-        action = environment.action_space.sample()
 
-        # step applies the action and returns the new state of the environment.
+    while not terminated and not truncated:
+        action = environment.action_space.sample()
         observation, reward, terminated, truncated, information = (
             environment.step(action)
         )
@@ -66,13 +59,10 @@ def run_one_episode(environment, seed):
         total_reward = total_reward + float(reward)
         step_count = step_count + 1
 
-        # This should never happen because LunarLander has its own time limit.
-        # It protects the program if the environment is accidentally misused.
+        # Extra protection against an unexpectedly long episode.
         if step_count >= SAFETY_STEP_LIMIT:
             raise RuntimeError("An episode exceeded the safety step limit.")
 
-    # A dictionary gives a clear name to every value that will become a
-    # column in the CSV file.
     episode_result = {
         "seed": seed,
         "total_reward": total_reward,
@@ -102,8 +92,7 @@ def run_baseline_experiment():
             episode_result["episode"] = episode_number
             all_results.append(episode_result)
 
-            # A progress message every 10 episodes shows that the program is
-            # still working without printing 100 nearly identical lines.
+            # Print progress every 10 episodes.
             if episode_number % 10 == 0:
                 rounded_reward = round(episode_result["total_reward"], 2)
                 print(
