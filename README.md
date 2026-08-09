@@ -5,7 +5,7 @@ This project studies reinforcement learning in Gymnasium's
 
 ## Research Question
 
-How the exploration schedule affects the performance and reliability of a
+How does the exploration schedule affect the performance and reliability of a
 Deep Q-Network (DQN) agent in `LunarLander-v3`?
 
 ## Project Status
@@ -34,7 +34,7 @@ The main files are:
 
 ## Setup
 
-See [`docs/setup.md`](docs/setup.md) for beginner-friendly Windows setup steps.
+See [`docs/setup.md`](docs/setup.md) for Windows setup steps.
 
 After installing the dependencies, check the environment with:
 
@@ -129,6 +129,10 @@ For the complete discussion and limitations, see the
 - [Final comparison plot](results/plots/final_schedule_comparison.png)
 - [Demonstration video](https://youtu.be/UTzQmFBCSVw)
 - [Project source code](src/lunar_lander_rl)
+
+The demonstration video uses one selected successful episode to show the learned landing behavior. The quantitative results in the report are based on
+the complete evaluation set for each trained model, not the selected demo
+episode.
 
 ## Repository Layout
 
