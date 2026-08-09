@@ -9,10 +9,9 @@ import torch
 from dqn_components import DQNNetwork
 
 
-# Find the main project folder.
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-# This model had a strong and consistent final evaluation result.
+# Use the fast-decay seed-1 model for the demonstration.
 CHECKPOINT_FILE = (
     PROJECT_ROOT
     / "results"
@@ -22,7 +21,8 @@ CHECKPOINT_FILE = (
 
 VIDEO_FOLDER = PROJECT_ROOT / "artifacts" / "videos"
 
-# Seed 1004 previously produced a successful landing with a reward around 269.
+# Use one successful evaluation seed for the visual demonstration only.
+# Reported results use the complete evaluation set.
 DEMO_SEED = 1004
 
 
