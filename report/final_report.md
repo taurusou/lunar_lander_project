@@ -2,8 +2,7 @@
 
 ## 1. Project overview
 
-This project studies how does the rate of epsilon decay affect the performance and reliability of a Deep Q-Network agent in Gymnasium's LunarLander-v3
-environment.
+This project studies how the rate of epsilon decay affects the performance and reliability of a Deep Q-Network agent in Gymnasium's LunarLander-v3 environment.
 
 The research question is:
 
@@ -25,6 +24,13 @@ The agent has four discrete actions:
 4. Fire the right orientation engine
 
 Because the observation space is continuous, a traditional Q-table would be impractical. Therefore, this project uses a neural network to approximate Q-values.
+
+### 2.1 Rewards and Episode Ending
+
+The goal is to control the lander and land safely on the landing pad. The reward generally improves when the lander moves closer to the pad, reduces its speed, stays more level, and makes leg contact with the ground. Using the engines has a small reward cost. A safe landing adds 100 points, while a crash subtracts 100 points. Gymnasium considers an episode solved when the total reward is at least
+200.
+
+An episode terminates if the lander crashes, moves outside the allowed horizontal area, or comes to rest. The environment can also stop an episode at its time limit, which Gymnasium reports separately as truncation.
 
 ## 3. Model and Approach
 
@@ -100,7 +106,7 @@ Each experience contains:
 - The selected action
 - The reward
 - The next state
-- Whether the episode ended
+- Whether the episode terminated or was truncated
 
 The replay memory can store up to 50,000 experiences.
 
@@ -131,7 +137,7 @@ I used a soft-update rate of `0.005`. After each training update, a small portio
 
 ### 3.5 Network Training
 
-The neural network was trained using the AdamW optimizer with a learning rate of `0.0003`.
+The neural network was trained using the AdamW optimizer with AMSGrad enabled and a learning rate of `0.0003`.
 
 I used Smooth L1 loss to measure the difference between the predicted Q-values and the target Q-values. Smooth L1 loss is less sensitive to very large errors than regular squared-error loss, which can help make training more stable.
 
@@ -146,6 +152,7 @@ The main training settings were:
 | Setting | Value |
 |---|---:|
 | Training episodes per model | 800 |
+| Optimizer | AdamW with AMSGrad |
 | Replay-memory capacity | 50,000 |
 | Minimum replay size | 1,000 |
 | Batch size | 128 |
@@ -256,7 +263,7 @@ For example, a model could have a high average reward but still perform poorly o
 
 ---
 
-## 5. Troubleshooting and Iterative Development
+## 5. Problem Solving and Iterative Development
 
 I developed the project in several stages instead of immediately running the full experiment.
 
@@ -341,7 +348,15 @@ This became useful when the first full experiment did not finish in one executio
 
 The program recognized the four completed models and continued with the remaining two. This saved time and prevented completed results from being overwritten.
 
-### 5.6 Gradual-Decay Seed 2
+### 5.6 From the Baseline to a Controlled DQN Comparison
+
+The random baseline showed that choosing actions without learning was not enough for this problem. This motivated the use of DQN, which could estimate action values from LunarLander's continuous observations.
+
+After the DQN training pipeline was working, I focused on exploration as the main algorithm choice to test. Instead of changing several hyperparameters at the same time, I kept the neural network, optimizer, replay memory, training budget, and evaluation procedure fixed. I changed only the epsilon-decay factor.
+
+This produced two controlled versions of the same DQN agent: one that reduced exploration quickly and one that continued exploring for longer. Comparing the two schedules across multiple training seeds made it possible to study both performance and consistency instead of judging the algorithm from one successful run.
+
+### 5.7 Gradual-Decay Seed 2
 
 One result that stood out was the gradual-decay model trained with seed 2.
 
@@ -666,9 +681,13 @@ The most useful next step would be to repeat the experiment with more training s
 6. Project GitHub repository:  
    [Lunar Lander Project](https://github.com/taurusou/lunar_lander_project)
 
-7. Project demonstration video:  
+7. Project demonstration video:
+
+   The demonstration uses one selected successful evaluation episode to make the learned behavior easy to see. The numerical results reported above use all evaluation episodes for each trained model and do not depend on the selected demo episode.
+
    Generated videos are kept out of Git by default because they can become large. An unlisted demonstration of the trained fast-decay DQN agent is available here:<br>
     [Watch the LunarLander DQN demonstration](https://youtu.be/UTzQmFBCSVw)
+
 
 ### Source Attribution
 
